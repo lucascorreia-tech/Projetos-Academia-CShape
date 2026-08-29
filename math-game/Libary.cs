@@ -1,19 +1,64 @@
-using System;
-
 public class Libary
 {
     private Random randNum = new();
 
     private string[] operadores = {"+", "-", "/", "x"};
-    public static void Easy()
+    public int Easy()
     {
-        return;
+        int ponto = 0;
+        for (int i = 0; i < 5; i++)
+        {
+            string operador = operadores[randNum.Next(operadores.Length)];
+            int num1 = randNum.Next(10);
+            int num2 = randNum.Next(10);
+            NovasPerguntas(num1,num2,operador);
+            int resposta = Convert.ToInt32(Console.ReadLine());
+            bool resultado = Resposta(num1,num2,operador,resposta);
+            if (resultado)
+            {
+                ponto++;
+            }
+        }
+
+        return ponto;
     }
 
-    public void NovasPerguntas(int x, int y)
+    public void NovasPerguntas(int x, int y, string operador)
     {
-        string operador = operadores[randNum.Next(operadores.Length)];
-        Console.WriteLine("Qual é resultado da conta abaixo ?");
-        Console.WriteLine($"{x} {operador} {y}");
+            Console.WriteLine("Qual é resultado da conta abaixo ?");
+            Console.WriteLine($"{x} {operador} {y}");
+    }
+
+    public bool Resposta(int x, int y, string operador, int z)
+    {
+        switch (operador)
+        {
+            case "+":
+                if ((x + y) == z)
+                {
+                    return true;
+                }
+                break;
+            case "-":
+                if ((x - y) == z)
+                {
+                    return true;
+                }
+                break;
+            case "/":
+                if ((x / y) == z)
+                    {
+                        return true;
+                    }
+                    break;
+            case "x":
+                if ((x * y) == z)
+                {
+                    return true;
+                }
+                break;
+        }
+
+        return false;
     }
 }

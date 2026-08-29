@@ -4,10 +4,10 @@ Criar um jogo que consiste em perguntar ao jogador qual é resultado de uma perg
 
 ## Requisitos do projeto
 
-- [ ] Ter pelo menos 5 perguntas.
-- [ ] As divisões resultar apenas em INTEGERS  e os dividendos devem passar de 0 a 100. Além disso não deve apresentar a divisão 7/2 para o usuário, já que não resulta em um número inteiro.
-- [ ] Os usuários devem receber um menu para escolher uma operação.
-- [ ] Deve gravar jogos anteriores em uma lista e deve haver uma opção no menu para o usuário visualizar um histórico de jogos anteriores.
+- [X] Ter pelo menos 5 perguntas.
+- [ ] As divisões resultam apenas em INTEGERS  e os dividendos devem passar de 0 a 100. Além disso não deve apresentar a divisão 7/2 para o usuário, já que não resulta em um número inteiro.
+- [X] Os usuários devem receber um menu para escolher uma operação.
+- [X] Deve gravar jogos anteriores em uma lista e deve haver uma opção no menu para o usuário visualizar um histórico de jogos anteriores.
 
 ## Desafios
 - [ ] Implementar níveis de dificuldade.
