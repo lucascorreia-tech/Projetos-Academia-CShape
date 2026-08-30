@@ -1,0 +1,11 @@
+*.user
+*.userosscache
+*.sln.docstates
+[Bb]in/
+[Oo]bj/
+.csx/
+.nuget/
+_ReSharper*/
+.vs/
+bin
+obj
