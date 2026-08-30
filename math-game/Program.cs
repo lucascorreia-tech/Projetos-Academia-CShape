@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-public class Program
+﻿public class Program
 {
     public static void Main()
     {
@@ -10,9 +8,9 @@ public class Program
         List<int> rodadas = [];
         do
         {
-            Console.WriteLine("Bem vindo ao Jogo de Matématico.");
-            Console.WriteLine("Escolha uma opção abaixo:");
-            Console.WriteLine("1- Jogo fácil\n5- Listar Pontuações\n0- Sair do jogo");
+            Console.WriteLine("===============================\nBem vindo ao Jogo Matématico.\n===============================");
+            Console.WriteLine("\nEscolha uma opção abaixo:");
+            Console.WriteLine("1- Jogo fácil\n2- Jogo intermédiario\n3- Jogo Difícil\n4- Jogo Aleátorio\n5- Listar Pontuações\n0- Sair do jogo");
             op = Convert.ToInt32(Console.ReadLine());
             switch (op)
             {
@@ -21,8 +19,12 @@ public class Program
                     rodadas.Add(pontos);
                     break;
                 case 2:
+                    pontos = lb.Inter();
+                    rodadas.Add(pontos);
                     break;
                 case 3:
+                    pontos = lb.Dificult();
+                    rodadas.Add(pontos);
                     break;
                 case 4:
                     break;
@@ -30,9 +32,11 @@ public class Program
                     Console.WriteLine("=====================\n=PONTUAÇÃO DOS JOGOS=\n=====================");
                     for (int i = 0; i < rodadas.Count; i++)
                     {
-                        Console.WriteLine($"Rodada {i}° -> {rodadas[i]} pontos");
+                        Console.WriteLine($"Rodada {i + 1}° -> {rodadas[i]} pontos");
                     }
                     Console.WriteLine();
+                    break;
+                case 0:
                     break;
                 default:
                     Console.WriteLine("Opção inválida");
