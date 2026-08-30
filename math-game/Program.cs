@@ -10,7 +10,7 @@
         {
             Console.WriteLine("===============================\nBem vindo ao Jogo Matématico.\n===============================");
             Console.WriteLine("\nEscolha uma opção abaixo:");
-            Console.WriteLine("1- Jogo fácil\n2- Jogo intermédiario\n3- Jogo Difícil\n4- Jogo Aleátorio\n5- Listar Pontuações\n0- Sair do jogo");
+            Console.WriteLine("1- Jogo fácil\n2- Jogo intermédiario\n3- Jogo Difícil\n4- Listar Pontuações\n0- Sair do jogo");
             op = Convert.ToInt32(Console.ReadLine());
             switch (op)
             {
@@ -25,10 +25,8 @@
                 case 3:
                     pontos = lb.Dificult();
                     rodadas.Add(pontos);
-                    break;
+                    break; 
                 case 4:
-                    break;
-                case 5:
                     Console.WriteLine("=====================\n=PONTUAÇÃO DOS JOGOS=\n=====================");
                     for (int i = 0; i < rodadas.Count; i++)
                     {
