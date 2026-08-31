@@ -12,5 +12,5 @@ Criar um jogo que consiste em perguntar ao jogador qual é resultado de uma perg
 ## Desafios
 - [X] Implementar níveis de dificuldade.
 - [X] Adicione um tempororizador para acompanhar quanto o usuário leva para terminar o jogo.
-- [ ] Crie uma opção de 'jogo aleátorio' onde os jogadores serão apresentados com perguntas de operações aleatórios.
-- [ ] Tentar usar apenas um método para todos os jogos. Utilizar o Princípio DRY.
+- [X] Crie uma opção de 'jogo aleátorio' onde os jogadores serão apresentados com perguntas de operações aleatórios. (* Praticamente todos que eu fiz são aleátorios.)
+- [X] Tentar usar apenas um método para todos os jogos. Utilizar o Princípio DRY. ( Não achei algo !)
