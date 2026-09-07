@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-﻿using System.IO.Pipelines;
-using System.Net;
-=======
-﻿// CalculatorLibrary.cs
->>>>>>> 6d975693133da94bccf3c827efe25fad3337113c
 using Newtonsoft.Json;
 
 namespace CalculatorLibrary
@@ -48,13 +42,10 @@ namespace CalculatorLibrary
                     result = num1 * num2;
                     writer.WriteValue("Multiply");
                     break;
-<<<<<<< HEAD
                 case "p":
                     result = Math.Pow(num1,num2);
                     writer.WriteValue("Pow");
                     break;
-=======
->>>>>>> 6d975693133da94bccf3c827efe25fad3337113c
                 case "d":
                     // Ask the user to enter a non-zero divisor.
                     if (num2 != 0)
@@ -74,7 +65,6 @@ namespace CalculatorLibrary
             return result;
         }
 
-<<<<<<< HEAD
         public double DoOtherOperation(double num1, string op)
         {
             double result = double.NaN;
@@ -112,8 +102,6 @@ namespace CalculatorLibrary
             return result;
         }
 
-=======
->>>>>>> 6d975693133da94bccf3c827efe25fad3337113c
         public void Finish()
         {
             writer.WriteEndArray();
