@@ -10,6 +10,7 @@ namespace CalculatorProgram
         {
             bool endApp = false;
             int useCalculator = -1;
+            List<double> numberList = [];
             Console.WriteLine("Console Calculator in C#\r");
             Console.WriteLine("------------------------\n");
             Calculator calculator = new Calculator();
@@ -56,7 +57,11 @@ namespace CalculatorProgram
 
                 string? op = Console.ReadLine();
 
+<<<<<<< Updated upstream
                 if (op == null || !Regex.IsMatch(op, "[a|s|m|d|sq|p]"))
+=======
+                if (op == null || !Regex.IsMatch(op, "[a|s|m|d|sq|p|10|tan|cos|sin]"))
+>>>>>>> Stashed changes
                 {
                    Console.WriteLine("Error: Unrecognized input.");
                 }
@@ -82,7 +87,11 @@ namespace CalculatorProgram
                     {
                         Console.WriteLine("This operation will result in a mathematical error. \n");
                     }
-                    else Console.WriteLine("Your result: {0:0.##}\n", result);
+                    else
+                    {
+                        Console.WriteLine("Your result: {0:0.##}\n", result);
+                        numberList.Add(result);
+                    }
                 }    
                 else
                 { 
@@ -93,13 +102,18 @@ namespace CalculatorProgram
                        {
                            Console.WriteLine("This operation will result in a mathematical error.\n");
                        }
-                       else Console.WriteLine("Your result: {0:0.##}\n", result);
+                       else 
+                       {
+                        Console.WriteLine("Your result: {0:0.##}\n", result);
+                        numberList.Add(result);
+                       } 
                    }
                    catch (Exception e)
                    {
                        Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
                    }
                 }
+                
                 Console.WriteLine("------------------------\n");
 
                 Console.Write("Press 'n' and Enter to close the app, or press any other key and Enter to continue: ");
