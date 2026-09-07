@@ -42,7 +42,7 @@ namespace CalculatorProgram
                     numInput2 = Console.ReadLine();
                 }
 
-                Console.WriteLine("Choose an operator from the following list:");
+                Console.WriteLine("\nChoose an operator from the following list:\n");
                 Console.WriteLine("\ta - Add");
                 Console.WriteLine("\ts - Subtract");
                 Console.WriteLine("\tm - Multiply");
@@ -51,7 +51,7 @@ namespace CalculatorProgram
                 Console.WriteLine("\tp - Power");
                 Console.WriteLine("\t10 - 10x");
                 Console.WriteLine("\tsin - Seno");
-                Console.WriteLine("\ncos - Cosseno");
+                Console.WriteLine("\tcos - Cosseno");
                 Console.WriteLine("\ttan - Tangente");
                 Console.Write("Your option? ");
 
@@ -62,7 +62,7 @@ namespace CalculatorProgram
                    Console.WriteLine("Error: Unrecognized input.");
                 }
 
-                if (Regex.IsMatch(op!, "[10|sq|tan|cos|sin]"))
+                if (Regex.IsMatch(op!, "^(10|sq|tan|cos|sin)$"))
                 { 
                     Console.WriteLine("Choose um number");
                     Console.WriteLine("1 - number 1");
