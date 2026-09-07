@@ -1,4 +1,5 @@
-﻿// CalculatorLibrary.cs
+﻿using System.IO.Pipelines;
+using System.Net;
 using Newtonsoft.Json;
 
 namespace CalculatorLibrary
@@ -43,6 +44,10 @@ namespace CalculatorLibrary
                     result = num1 * num2;
                     writer.WriteValue("Multiply");
                     break;
+                case "p":
+                    result = Math.Pow(num1,num2);
+                    writer.WriteValue("Pow");
+                    break;
                 case "d":
                     // Ask the user to enter a non-zero divisor.
                     if (num2 != 0)
@@ -53,6 +58,43 @@ namespace CalculatorLibrary
                     break;
                 // Return text for an incorrect option entry.
                 default:
+                    break;
+            }
+            writer.WritePropertyName("Result");
+            writer.WriteValue(result);
+            writer.WriteEndObject();
+
+            return result;
+        }
+
+        public double DoOtherOperation(double num1, string op)
+        {
+            double result = double.NaN;
+            writer.WriteStartObject();
+            writer.WritePropertyName("Operand1");
+            writer.WriteValue(num1);
+            writer.WritePropertyName("Operation");
+            switch (op)
+            {
+                case "sq":
+                    result = Math.Sqrt(num1);
+                    writer.WriteValue("Square Root");
+                    break;
+                case "10":
+                    result = Math.Pow(10,num1);
+                    writer.WriteValue("Pow 10");
+                    break;
+                case "sin":
+                    result = Math.Sin(num1);
+                    writer.WriteValue("Seno");
+                    break;
+                case "cos":
+                    result = Math.Cos(num1);
+                    writer.WriteValue("Cosseno");
+                    break;
+                case "tan":
+                    result = Math.Tan(num1);
+                    writer.WriteValue("Tangente");
                     break;
             }
             writer.WritePropertyName("Result");
