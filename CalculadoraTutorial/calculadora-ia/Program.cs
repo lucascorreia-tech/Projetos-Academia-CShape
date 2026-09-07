@@ -57,11 +57,7 @@ namespace CalculatorProgram
 
                 string? op = Console.ReadLine();
 
-<<<<<<< Updated upstream
-                if (op == null || !Regex.IsMatch(op, "[a|s|m|d|sq|p]"))
-=======
                 if (op == null || !Regex.IsMatch(op, "[a|s|m|d|sq|p|10|tan|cos|sin]"))
->>>>>>> Stashed changes
                 {
                    Console.WriteLine("Error: Unrecognized input.");
                 }
