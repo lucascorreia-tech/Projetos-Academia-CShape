@@ -1,124 +1,171 @@
 ﻿using System.Text.RegularExpressions;
 using CalculatorLibrary;
 
-namespace CalculatorProgram
+bool endApp = false;
+int useCalculator = -1;
+List<double> numberList = new();
+Calculator calculator = new Calculator();
+
+Console.WriteLine("Console Calculator in C#\r");
+Console.WriteLine("------------------------\n");
+
+while (!endApp)
 {
+    useCalculator++;
+    Console.WriteLine($"Using Calculator {useCalculator} time(s)\n");
+    double number1 = 0;
+    double number2 = 0;
+    double result = 0;
 
-    class Program
+    if (numberList.Count > 0)
     {
-        static void Main(string[] args)
+        bool validHistoryChoice = false;
+
+        while (!validHistoryChoice)
         {
-            bool endApp = false;
-            int useCalculator = -1;
-            List<double> numberList = [];
-            Console.WriteLine("Console Calculator in C#\r");
-            Console.WriteLine("------------------------\n");
-            Calculator calculator = new Calculator();
-            while (!endApp)
+            Console.WriteLine("Do you want to use a previous result in this calcultaor ?");
+            Console.WriteLine("y - yes\nn - no\nd - delete");
+            Console.Write("Your option?");
+            string? choice = Console.ReadLine()?.Trim().ToLower();
+
+            switch (choice)
             {
-                useCalculator++;
-                Console.WriteLine($"Using Calculator for {useCalculator} times\n");
-                string? numInput1 = "";
-                string? numInput2 = "";
-                double result = 0;
+                case "d":
+                    numberList.Clear();
+                    Console.WriteLine("History deleted.\n");
+                    validHistoryChoice = true;
+                    break;
 
-                Console.Write("Type a number, and then press Enter: ");
-                numInput1 = Console.ReadLine();
-
-                double cleanNum1 = 0;
-                while (!double.TryParse(numInput1, out cleanNum1))
-                {
-                    Console.Write("This is not valid input. Please enter an integer value: ");
-                    numInput1 = Console.ReadLine();
-                }
-
-                Console.Write("Type another number, and then press Enter: ");
-                numInput2 = Console.ReadLine();
-
-                double cleanNum2 = 0;
-                while (!double.TryParse(numInput2, out cleanNum2))
-                {
-                    Console.Write("This is not valid input. Please enter an integer value: ");
-                    numInput2 = Console.ReadLine();
-                }
-
-                Console.WriteLine("\nChoose an operator from the following list:\n");
-                Console.WriteLine("\ta - Add");
-                Console.WriteLine("\ts - Subtract");
-                Console.WriteLine("\tm - Multiply");
-                Console.WriteLine("\td - Divide");
-                Console.WriteLine("\tsq - Square");
-                Console.WriteLine("\tp - Power");
-                Console.WriteLine("\t10 - 10x");
-                Console.WriteLine("\tsin - Seno");
-                Console.WriteLine("\tcos - Cosseno");
-                Console.WriteLine("\ttan - Tangente");
-                Console.Write("Your option? ");
-
-                string? op = Console.ReadLine();
-
-                if (op == null || !Regex.IsMatch(op, "[a|s|m|d|sq|p|10|tan|cos|sin]"))
-                {
-                   Console.WriteLine("Error: Unrecognized input.");
-                }
-
-                if (Regex.IsMatch(op!, "^(10|sq|tan|cos|sin)$"))
-                { 
-                    Console.WriteLine("Choose um number");
-                    Console.WriteLine("1 - number 1");
-                    Console.WriteLine("2 - Number 2");
-                    
-                    string? numberOp = Console.ReadLine();
-
-                    if (numberOp == null || !Regex.IsMatch(numberOp, "[1|2]"))
-                    {
-                        Console.WriteLine("Error: Unrecognized input.");
-                        
-                    }
-
-                    double number = numberOp == "1" ? cleanNum1 : numberOp == "2" ? cleanNum2: 0;
-
-                    result = calculator.DoOtherOperation(number, op!);
-                    if (double.IsNaN(result))
-                    {
-                        Console.WriteLine("This operation will result in a mathematical error. \n");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Your result: {0:0.##}\n", result);
-                        numberList.Add(result);
-                    }
-                }    
-                else
-                { 
-                   try
-                   {
-                       result = calculator.DoOperation(cleanNum1, cleanNum2, op!); 
-                       if (double.IsNaN(result))
-                       {
-                           Console.WriteLine("This operation will result in a mathematical error.\n");
-                       }
-                       else 
-                       {
-                        Console.WriteLine("Your result: {0:0.##}\n", result);
-                        numberList.Add(result);
-                       } 
-                   }
-                   catch (Exception e)
-                   {
-                       Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
-                   }
-                }
-                
-                Console.WriteLine("------------------------\n");
-
-                Console.Write("Press 'n' and Enter to close the app, or press any other key and Enter to continue: ");
-                if (Console.ReadLine() == "n") endApp = true;
-
-                Console.WriteLine("\n");
+                case "y":
+                    number1 = SelectFromHistory(calculator, numberList); 
+                    number2 = GetNumberInput("Type another number, and the press and then press Enter: ");
+                    validHistoryChoice = true;
+                    break;
+                case "n":
+                    number1 = GetNumberInput("Type a number, and then press Enter: ");
+                    number2 = GetNumberInput("Type another number, and the press and then press Enter: ");
+                    validHistoryChoice = true;
+                    break;
+                default:
+                    Console.WriteLine("Error: Unrecognized input. Please enter 'y','n' or 'd' .\n");
+                    break;
             }
-            calculator.Finish();
-            return;
         }
+    }
+    
+    if (numberList.Count == 0)
+    {
+        number1 = GetNumberInput("Type a number, and then press Enter: ");
+        number2 = GetNumberInput("Type another number, and the press and then press Enter: ");
+    }
+   
+
+    Console.WriteLine("\nChoose an operator from the following list:\n");
+    Console.WriteLine("\ta - Add");
+    Console.WriteLine("\ts - Subtract");
+    Console.WriteLine("\tm - Multiply");
+    Console.WriteLine("\td - Divide");
+    Console.WriteLine("\tsq - Square");
+    Console.WriteLine("\tp - Power");
+    Console.WriteLine("\t10 - 10x");
+    Console.WriteLine("\tsin - Seno");
+    Console.WriteLine("\tcos - Cosseno");
+    Console.WriteLine("\ttan - Tangente");
+    Console.Write("Your option? ");
+
+    string? op = Console.ReadLine();
+
+    if (op == null || !Regex.IsMatch(op, "^(a|s|m|d|sq|p|10|tan|cos|sin)$"))
+    {
+        Console.WriteLine("Error: Unrecognized input.");
+        continue;
+    }
+
+    if (Regex.IsMatch(op!, "^(10|sq|tan|cos|sin)$"))
+    {
+        Console.WriteLine("Choose um number");
+        Console.WriteLine("1 - number 1");
+        Console.WriteLine("2 - Number 2");
+
+        string? numberOp = Console.ReadLine();
+
+        if (numberOp == null || !Regex.IsMatch(numberOp, "^(1|2)$"))
+        {
+            Console.WriteLine("Error: Unrecognized input.");
+
+        }
+
+        double number = numberOp == "1" ? number1 : numberOp == "2" ? number2 : 0;
+
+        result = calculator.DoOtherOperation(number, op!);
+        if (double.IsNaN(result))
+        {
+            Console.WriteLine("This operation will result in a mathematical error. \n");
+        }
+        else
+        {
+            Console.WriteLine("Your result: {0:0.##}\n", result);
+            numberList.Add(result);
+        }
+    }
+    else
+    {
+        try
+        {
+            result = calculator.DoOperation(number1, number2, op!);
+            if (double.IsNaN(result))
+            {
+                Console.WriteLine("This operation will result in a mathematical error.\n");
+            }
+            else
+            {
+                Console.WriteLine("Your result: {0:0.##}\n", result);
+                numberList.Add(result);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
+        }
+    }
+
+    Console.WriteLine("------------------------\n");
+
+    Console.Write("Press 'n' and Enter to close the app, or press any other key and Enter to continue: ");
+    if (Console.ReadLine() == "n") endApp = true;
+
+    Console.WriteLine("\n");
+}
+calculator.Finish();
+return;
+
+static double GetNumberInput(string prompt)
+{
+    Console.WriteLine(prompt);
+    string? input = Console.ReadLine();
+    double number;
+
+    while (!double.TryParse(input, out number))
+    {
+        Console.Write("Invalid input. Please enter a valid number: ");
+        input = Console.ReadLine();
+    }
+    return number;
+}
+
+static double SelectFromHistory(Calculator calculator, List<double> numberList)
+{
+    while (true)
+    {
+        Console.WriteLine("\nChoose a number from History:");
+        calculator.ListNumbers(numberList);
+        Console.Write("Enter index: ");
+
+        if (int.TryParse(Console.ReadLine(), out int choose) && choose > 0 && choose <= numberList.Count)
+        {
+            return numberList[choose - 1];
+        }
+
+        Console.WriteLine($"Invalid choice. Please enter an index between 1 and {numberList.Count}.");
     }
 }
