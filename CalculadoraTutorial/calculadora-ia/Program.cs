@@ -59,27 +59,36 @@ while (!endApp)
         number2 = GetNumberInput("Type another number, and the press and then press Enter: ");
     }
    
-
-    Console.WriteLine("\nChoose an operator from the following list:\n");
-    Console.WriteLine("\ta - Add");
-    Console.WriteLine("\ts - Subtract");
-    Console.WriteLine("\tm - Multiply");
-    Console.WriteLine("\td - Divide");
-    Console.WriteLine("\tsq - Square");
-    Console.WriteLine("\tp - Power");
-    Console.WriteLine("\t10 - 10x");
-    Console.WriteLine("\tsin - Seno");
-    Console.WriteLine("\tcos - Cosseno");
-    Console.WriteLine("\ttan - Tangente");
-    Console.Write("Your option? ");
-
-    string? op = Console.ReadLine();
-
-    if (op == null || !Regex.IsMatch(op, "^(a|s|m|d|sq|p|10|tan|cos|sin)$"))
+    bool validChooseOp = false;
+    string? op = "";
+    while (!validChooseOp)
     {
-        Console.WriteLine("Error: Unrecognized input.");
-        continue;
+        Console.Clear();
+        Console.WriteLine("\nChoose an operator from the following list:\n");
+        Console.WriteLine("\ta - Add");
+        Console.WriteLine("\ts - Subtract");
+        Console.WriteLine("\tm - Multiply");
+        Console.WriteLine("\td - Divide");
+        Console.WriteLine("\tsq - Square");
+        Console.WriteLine("\tp - Power");
+        Console.WriteLine("\t10 - 10x");
+        Console.WriteLine("\tsin - Seno");
+        Console.WriteLine("\tcos - Cosseno");
+        Console.WriteLine("\ttan - Tangente");
+        Console.Write("Your option? ");
+        op = Console.ReadLine();
+        if (op == null || !Regex.IsMatch(op, "^(a|s|m|d|sq|p|10|tan|cos|sin)$"))
+        {
+            Console.WriteLine("Error: Unrecognized input.");
+            Console.ReadLine();
+            continue;
+        }
+        validChooseOp = true;
     }
+    
+
+    
+    
 
     if (Regex.IsMatch(op!, "^(10|sq|tan|cos|sin)$"))
     {

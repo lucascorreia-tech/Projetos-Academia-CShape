@@ -11,10 +11,4 @@
       "Operand2": 20.0,
       "Operation": "Subtract",
       "Result": 10.0
-    },
-    {
-      "Operand1": 0.0,
-      "Operand2": 0.0,
-      "Operation": "Add",
-      "Result": 0.0
     }
