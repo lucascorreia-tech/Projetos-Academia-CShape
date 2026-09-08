@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Drawing;
+using System.Text.RegularExpressions;
 using CalculatorLibrary;
 
 bool endApp = false;
@@ -47,7 +48,7 @@ while (!endApp)
                     validHistoryChoice = true;
                     break;
                 default:
-                    Console.WriteLine("Error: Unrecognized input. Please enter 'y','n' or 'd' .\n");
+                    ErrorMensagem("Error: Unrecognized input. Please enter 'y','n' or 'd' .\n");
                     break;
             }
         }
@@ -79,8 +80,7 @@ while (!endApp)
         op = Console.ReadLine();
         if (op == null || !Regex.IsMatch(op, "^(a|s|m|d|sq|p|10|tan|cos|sin)$"))
         {
-            Console.WriteLine("Error: Unrecognized input.");
-            Console.ReadLine();
+            ErrorMensagem("Error: Unrecognized input.");
             continue;
         }
         validChooseOp = true;
@@ -92,24 +92,31 @@ while (!endApp)
 
     if (Regex.IsMatch(op!, "^(10|sq|tan|cos|sin)$"))
     {
-        Console.WriteLine("Choose um number");
-        Console.WriteLine("1 - number 1");
-        Console.WriteLine("2 - Number 2");
-
-        string? numberOp = Console.ReadLine();
-
-        if (numberOp == null || !Regex.IsMatch(numberOp, "^(1|2)$"))
+        bool validNumberChoose = false;
+        string? numberOp = "";
+        while (!validNumberChoose)
         {
-            Console.WriteLine("Error: Unrecognized input.");
+            Console.Clear();
+            Console.WriteLine("Choose um number");
+            Console.WriteLine("1 - number 1");
+            Console.WriteLine("2 - Number 2");
 
+            numberOp = Console.ReadLine();
+
+            if (numberOp == null || !Regex.IsMatch(numberOp, "^(1|2)$"))
+            {
+                ErrorMensagem("Error: Unrecognized input.");
+                continue;
+            }
+            validNumberChoose = true;
         }
-
+        
         double number = numberOp == "1" ? number1 : numberOp == "2" ? number2 : 0;
 
         result = calculator.DoOtherOperation(number, op!);
         if (double.IsNaN(result))
         {
-            Console.WriteLine("This operation will result in a mathematical error. \n");
+            ErrorMensagem("This operation will result in a mathematical error. \n");
         }
         else
         {
@@ -124,7 +131,7 @@ while (!endApp)
             result = calculator.DoOperation(number1, number2, op!);
             if (double.IsNaN(result))
             {
-                Console.WriteLine("This operation will result in a mathematical error.\n");
+                ErrorMensagem("This operation will result in a mathematical error.\n");
             }
             else
             {
@@ -134,7 +141,7 @@ while (!endApp)
         }
         catch (Exception e)
         {
-            Console.WriteLine("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
+            ErrorMensagem("Oh no! An exception occurred trying to do the math.\n - Details: " + e.Message);
         }
     }
 
@@ -177,4 +184,13 @@ static double SelectFromHistory(Calculator calculator, List<double> numberList)
 
         Console.WriteLine($"Invalid choice. Please enter an index between 1 and {numberList.Count}.");
     }
+}
+
+static void ErrorMensagem(string prompt)
+{
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.BackgroundColor = ConsoleColor.DarkRed;
+    Console.WriteLine(prompt);
+    Console.ResetColor();
+    Console.ReadLine();
 }
