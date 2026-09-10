@@ -48,7 +48,7 @@ while (!endApp)
                     validHistoryChoice = true;
                     break;
                 default:
-                    ErrorMensagem("Error: Unrecognized input. Please enter 'y','n' or 'd' .\n");
+                    ErrorMensagem("Error: Unrecognized input. Please enter 'y','n' or 'd' .");
                     break;
             }
         }
@@ -87,9 +87,6 @@ while (!endApp)
     }
     
 
-    
-    
-
     if (Regex.IsMatch(op!, "^(10|sq|tan|cos|sin)$"))
     {
         bool validNumberChoose = false;
@@ -116,7 +113,7 @@ while (!endApp)
         result = calculator.DoOtherOperation(number, op!);
         if (double.IsNaN(result))
         {
-            ErrorMensagem("This operation will result in a mathematical error. \n");
+            ErrorMensagem("This operation will result in a mathematical error.");
         }
         else
         {
@@ -131,7 +128,7 @@ while (!endApp)
             result = calculator.DoOperation(number1, number2, op!);
             if (double.IsNaN(result))
             {
-                ErrorMensagem("This operation will result in a mathematical error.\n");
+                ErrorMensagem("This operation will result in a mathematical error.");
             }
             else
             {
@@ -190,7 +187,8 @@ static void ErrorMensagem(string prompt)
 {
     Console.ForegroundColor = ConsoleColor.Red;
     Console.BackgroundColor = ConsoleColor.DarkRed;
-    Console.WriteLine(prompt);
+    Console.Write(prompt + " Press Enter to continue.");
     Console.ResetColor();
+
     Console.ReadLine();
 }
