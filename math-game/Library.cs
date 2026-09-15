@@ -19,6 +19,11 @@ public class Library
                 int multiplicador = randNum.Next(0, maxNum1 + 1);
                 num1 = num2 * multiplicador;
             }
+            else
+            {
+                num1 = randNum.Next(1, maxNum1);
+                num2 = randNum.Next(1, maxNum2);
+            }
 
             NovasPerguntas(num1, num2, opAtual);
 
@@ -51,8 +56,8 @@ public class Library
        {
            "+" => (x + y) == z,
            "-" => (x - y) == z,
-           "/" => (x / y) == z,
            "x" => (x * y) == z,
+           "/" => (x / y) == z,
            _ => false
        };
     }

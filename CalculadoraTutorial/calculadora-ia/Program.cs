@@ -64,7 +64,6 @@ while (!endApp)
     string? op = "";
     while (!validChooseOp)
     {
-        Console.Clear();
         Console.WriteLine("\nChoose an operator from the following list:\n");
         Console.WriteLine("\ta - Add");
         Console.WriteLine("\ts - Subtract");
