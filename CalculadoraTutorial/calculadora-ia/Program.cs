@@ -25,30 +25,33 @@ while (!endApp)
         while (!validHistoryChoice)
         {
             Console.WriteLine("Do you want to use a previous result in this calcultaor ?");
-            Console.WriteLine("y - yes\nn - no\nd - delete");
+            Console.WriteLine("Speak:\nYes or No or Delete");
             Console.Write("Your option?");
-            string? choice = Console.ReadLine()?.Trim().ToLower();
+
+            var resultSpeech = await Spechtext.OutputSpeech();
+            string? choice = resultSpeech.Text.Trim().ToLower().TrimEnd('.',',','!','?');
+            Console.WriteLine($"[Debug - Recognized: '{choice}' | Reason: {resultSpeech.Reason}]");
 
             switch (choice)
             {
-                case "d":
+                case "delete":
                     numberList.Clear();
                     Console.WriteLine("History deleted.\n");
                     validHistoryChoice = true;
                     break;
 
-                case "y":
+                case "yes":
                     number1 = SelectFromHistory(calculator, numberList); 
                     number2 = GetNumberInput("Type another number, and the press and then press Enter: ");
                     validHistoryChoice = true;
                     break;
-                case "n":
+                case "no":
                     number1 = GetNumberInput("Type a number, and then press Enter: ");
                     number2 = GetNumberInput("Type another number, and the press and then press Enter: ");
                     validHistoryChoice = true;
                     break;
                 default:
-                    ErrorMensagem("Error: Unrecognized input. Please enter 'y','n' or 'd' .");
+                    ErrorMensagem("Error: Unrecognized input. Please Speak 'yes','no' or 'delete' .");
                     break;
             }
         }
