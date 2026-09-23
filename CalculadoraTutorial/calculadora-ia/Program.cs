@@ -1,11 +1,10 @@
-﻿using System.Drawing;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using CalculatorLibrary;
 
 bool endApp = false;
 int useCalculator = -1;
 List<double> numberList = new();
-Calculator calculator = new Calculator();
+using var calculator = new Calculator();
 
 Console.WriteLine("Console Calculator in C#\r");
 Console.WriteLine("------------------------\n");
@@ -28,26 +27,28 @@ while (!endApp)
             Console.WriteLine("Speak:\nYes or No or Delete");
             Console.Write("Your option?");
 
-            var resultSpeech = await Spechtext.OutputSpeech();
-            string? choice = resultSpeech.Text.Trim().ToLower().TrimEnd('.',',','!','?');
-            Console.WriteLine($"[Debug - Recognized: '{choice}' | Reason: {resultSpeech.Reason}]");
 
-            switch (choice)
+            var choice = await Spechtext.OutputSpeech();
+            string choiceText = choice.Text.Trim().TrimEnd('.').ToLower();
+
+            switch (choiceText)
             {
                 case "delete":
                     numberList.Clear();
                     Console.WriteLine("History deleted.\n");
                     validHistoryChoice = true;
+                    number1 = await GetNumberInput("Type a number, then press Enter: ");
+                    number2 = await GetNumberInput("Type another number, then press Enter: ");
                     break;
 
                 case "yes":
-                    number1 = SelectFromHistory(calculator, numberList); 
-                    number2 = GetNumberInput("Type another number, and the press and then press Enter: ");
+                    number1 = await SelectFromHistory(calculator, numberList);
+                    number2 = await GetNumberInput("Type another number, and the press and then press Enter: ");
                     validHistoryChoice = true;
                     break;
                 case "no":
-                    number1 = GetNumberInput("Type a number, and then press Enter: ");
-                    number2 = GetNumberInput("Type another number, and the press and then press Enter: ");
+                    number1 = await GetNumberInput("Type a number, and then press Enter: ");
+                    number2 = await GetNumberInput("Type another number, and the press and then press Enter: ");
                     validHistoryChoice = true;
                     break;
                 default:
@@ -56,60 +57,65 @@ while (!endApp)
             }
         }
     }
-    
-    if (numberList.Count == 0)
+
+    else
     {
-        number1 = GetNumberInput("Type a number, and then press Enter: ");
-        number2 = GetNumberInput("Type another number, and the press and then press Enter: ");
+        number1 = await GetNumberInput("Type a number, and then press Enter: ");
+        number2 = await GetNumberInput("Type another number, and the press and then press Enter: ");
     }
-   
+
     bool validChooseOp = false;
-    string? op = "";
+    string op = "";
+
     while (!validChooseOp)
     {
         Console.WriteLine("\nChoose an operator from the following list:\n");
-        Console.WriteLine("\ta - Add");
-        Console.WriteLine("\ts - Subtract");
-        Console.WriteLine("\tm - Multiply");
-        Console.WriteLine("\td - Divide");
-        Console.WriteLine("\tsq - Square");
-        Console.WriteLine("\tp - Power");
-        Console.WriteLine("\t10 - 10x");
-        Console.WriteLine("\tsin - Seno");
-        Console.WriteLine("\tcos - Cosseno");
-        Console.WriteLine("\ttan - Tangente");
+        Console.WriteLine("\t1 - Add");
+        Console.WriteLine("\t2 - Subtract");
+        Console.WriteLine("\t3 - Multiply");
+        Console.WriteLine("\t4 - Divide");
+        Console.WriteLine("\t5 - Square");
+        Console.WriteLine("\t6 - Power");
+        Console.WriteLine("\t7 - 10x");
+        Console.WriteLine("\t8 - Sine");
+        Console.WriteLine("\t9 - Cosine");
+        Console.WriteLine("\t10 - Tangente");
         Console.Write("Your option? ");
-        op = Console.ReadLine();
-        if (op == null || !Regex.IsMatch(op, "^(a|s|m|d|sq|p|10|tan|cos|sin)$"))
+
+        var opSpeech = await Spechtext.OutputSpeech();
+        op = opSpeech.Text.Trim().TrimEnd('.');
+
+        if (!Regex.IsMatch(op, @"^(1|2|3|4|5|6|7|8|9|10)$"))
         {
             ErrorMensagem("Error: Unrecognized input.");
             continue;
         }
         validChooseOp = true;
     }
-    
 
-    if (Regex.IsMatch(op!, "^(10|sq|tan|cos|sin)$"))
+
+    if (Regex.IsMatch(op!, @"^(5|7|8|9|10)$"))
     {
         bool validNumberChoose = false;
-        string? numberOp = "";
+        string numberOp = "";
+
         while (!validNumberChoose)
         {
-            Console.Clear();
             Console.WriteLine("Choose um number");
             Console.WriteLine("1 - number 1");
             Console.WriteLine("2 - Number 2");
 
-            numberOp = Console.ReadLine();
+            var numberOpSpeech = await Spechtext.OutputSpeech();
+            numberOp = numberOpSpeech.Text.TrimEnd('.').Trim();
 
-            if (numberOp == null || !Regex.IsMatch(numberOp, "^(1|2)$"))
+            if (!Regex.IsMatch(numberOp, @"^(1|2)$"))
             {
                 ErrorMensagem("Error: Unrecognized input.");
                 continue;
             }
             validNumberChoose = true;
         }
-        
+
         double number = numberOp == "1" ? number1 : numberOp == "2" ? number2 : 0;
 
         result = calculator.DoOtherOperation(number, op!);
@@ -151,24 +157,29 @@ while (!endApp)
 
     Console.WriteLine("\n");
 }
-calculator.Finish();
 return;
 
-static double GetNumberInput(string prompt)
+static async Task<double> GetNumberInput(string prompt)
 {
     Console.WriteLine(prompt);
-    string? input = Console.ReadLine();
+    string input;
     double number;
 
-    while (!double.TryParse(input, out number))
+    do
     {
-        Console.Write("Invalid input. Please enter a valid number: ");
-        input = Console.ReadLine();
-    }
+        var speechNumber = await Spechtext.OutputSpeech();
+        input = speechNumber.Text.Trim().TrimEnd('.');
+
+        if (!double.TryParse(input, out number))
+        {
+            Console.Write("Invalid input. Please say a valid number: ");
+        }
+    } while (!double.TryParse(input, out number));
+
     return number;
 }
 
-static double SelectFromHistory(Calculator calculator, List<double> numberList)
+static async Task<double> SelectFromHistory(Calculator calculator, List<double> numberList)
 {
     while (true)
     {
@@ -176,7 +187,9 @@ static double SelectFromHistory(Calculator calculator, List<double> numberList)
         calculator.ListNumbers(numberList);
         Console.Write("Enter index: ");
 
-        if (int.TryParse(Console.ReadLine(), out int choose) && choose > 0 && choose <= numberList.Count)
+        var speechChoose = await Spechtext.OutputSpeech();
+
+        if (int.TryParse(speechChoose.Text.TrimEnd('.'), out int choose) && choose > 0 && choose <= numberList.Count)
         {
             return numberList[choose - 1];
         }

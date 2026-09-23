@@ -18,7 +18,7 @@ public class Spechtext
         using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
 
         var result = await speechRecognizer.RecognizeOnceAsync();
-        
+
         return result;
     }
 }

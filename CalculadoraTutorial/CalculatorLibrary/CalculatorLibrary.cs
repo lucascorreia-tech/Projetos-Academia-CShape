@@ -1,9 +1,8 @@
-using System.Data;
 using Newtonsoft.Json;
 
 namespace CalculatorLibrary
 {
-    public class Calculator
+    public class Calculator : IDisposable
     {
 
         JsonWriter writer;
@@ -19,6 +18,11 @@ namespace CalculatorLibrary
             writer.WriteStartArray();
         }
 
+        public void Dispose()
+        {
+            Finish();
+        }
+
         public double DoOperation(double num1, double num2, string op)
         {
             double result = double.NaN; 
@@ -28,35 +32,33 @@ namespace CalculatorLibrary
             writer.WritePropertyName("Operand2");
             writer.WriteValue(num2);
             writer.WritePropertyName("Operation");
-            // Use a switch statement to do the math.
             switch (op)
             {
-                case "a":
+                case "1":
                     result = num1 + num2;
                     writer.WriteValue("Add");
                     break;
-                case "s":
+                case "2":
                     result = num1 - num2;
                     writer.WriteValue("Subtract");
                     break;
-                case "m":
+                case "3":
                     result = num1 * num2;
                     writer.WriteValue("Multiply");
                     break;
-                case "p":
+                case "6":
                     result = Math.Pow(num1,num2);
                     writer.WriteValue("Pow");
                     break;
-                case "d":
-                    // Ask the user to enter a non-zero divisor.
+                case "4":
                     if (num2 != 0)
                     {
                         result = num1 / num2;
                     }
                     writer.WriteValue("Divide");
                     break;
-                // Return text for an incorrect option entry.
                 default:
+                    writer.WriteValue("Unknown");
                     break;
             }
             writer.WritePropertyName("Result");
@@ -75,25 +77,28 @@ namespace CalculatorLibrary
             writer.WritePropertyName("Operation");
             switch (op)
             {
-                case "sq":
+                case "5":
                     result = Math.Sqrt(num1);
                     writer.WriteValue("Square Root");
                     break;
-                case "10":
+                case "7":
                     result = Math.Pow(10,num1);
                     writer.WriteValue("Pow 10");
                     break;
-                case "sin":
-                    result = Math.Sin(num1);
+                case "8":
+                    result = Math.Sin(num1 * Math.PI / 180);
                     writer.WriteValue("Seno");
                     break;
-                case "cos":
-                    result = Math.Cos(num1);
+                case "9":
+                    result = Math.Cos(num1 * Math.PI / 180);
                     writer.WriteValue("Cosseno");
                     break;
-                case "tan":
-                    result = Math.Tan(num1);
+                case "10":
+                    result = Math.Tan(num1 * Math.PI / 180);
                     writer.WriteValue("Tangente");
+                    break;
+                default:
+                    writer.WriteValue("Unknown");
                     break;
             }
             writer.WritePropertyName("Result");
