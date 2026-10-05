@@ -1,10 +1,14 @@
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices;
 
 namespace Habit_Logger_Me;
 public static class HabitRepository
 {
-    public static void CreateHabits(string nameHabit, string unit)
+    public static void CreateHabits()
     {
+        string nameHabit = AuxiliaryMethods.GetInputStr("\nWrite your habit: ");
+        string unit = AuxiliaryMethods.GetInputStr("\nWrite the unit of measure");
+
         using var command = DatabaseConnection.Open().CreateCommand();
         command.Parameters.AddWithValue("$namehabit", nameHabit);
         command.Parameters.AddWithValue("$unit", unit);
@@ -38,12 +42,12 @@ public static class HabitRepository
         }
         Console.WriteLine("--------------------------------------------\n");
     }
-    public static void Update()
+    public static void UpdateHabit()
     {
         Console.Clear();
         GetAllHabits();
 
-        var habitId = AuxiliaryMethods.GetNumberInput("\n\nPlease type Id of the record would like to Update\n \n");
+        var habitId = AuxiliaryMethods.GetNumberInput("\n\nPlease type Id of the Habit would like to Update\n \n");
 
         using var connection = DatabaseConnection.Open();
 
@@ -54,8 +58,8 @@ public static class HabitRepository
 
         if (checkQuery == 0)
         {
-            Console.WriteLine($"\n\nRecord with Id {habitId} doesn't exist.\n\n");
-            Update();
+            Console.WriteLine($"\n\nHabit with Id {habitId} doesn't exist.\n\n");
+            UpdateHabit();
             return;
         }
 
@@ -67,6 +71,31 @@ public static class HabitRepository
         tableCmd.Parameters.AddWithValue("$habit", habit);
         tableCmd.Parameters.AddWithValue("$unit", unit);
         tableCmd.Parameters.AddWithValue("$id",habitId);
+
+        tableCmd.ExecuteNonQuery();
     }
-    public static void Delete() {}
+    public static void DeleteHabit()
+    {
+        Console.Clear();
+        GetAllHabits();
+
+        var habitId = AuxiliaryMethods.GetNumberInput("\n\nPlease type Id of the Habit would like to Delete\n \n");
+
+        using var connection = DatabaseConnection.Open();
+
+        var tableCmd = connection.CreateCommand();
+        tableCmd.CommandText = @"DELETE FROM Habits WHERE Id_Habit = $habitId";
+        tableCmd.Parameters.AddWithValue("$habitId", habitId);
+
+        int rowCount = tableCmd.ExecuteNonQuery();
+
+        if (rowCount == 0)
+        {
+            Console.WriteLine($"\n\nHabit with Id {habitId} doens't exist. \n\n");
+            DeleteHabit();
+            return;
+        }
+
+        Console.WriteLine($"\n\nHabit with Id {habitId} was delete. \n\n");
+    }
 }
