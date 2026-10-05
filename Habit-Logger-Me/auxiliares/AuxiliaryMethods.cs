@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace Habit_Logger_Me;
 
@@ -26,4 +27,19 @@ public static class AuxiliaryMethods
 
         return finalInput;
     }
+
+    public static string GetDateInput()
+    {
+        Console.WriteLine("\n\nPlease insert the date: (Format: dd-mm-yy).");
+        string? dateInput = Console.ReadLine();
+
+        while (!DateTime.TryParseExact(dateInput, "dd-MM-yy", new CultureInfo("en-US"), DateTimeStyles.None, out _))
+        {
+            Console.WriteLine("\n\nInvalid date. (Format: dd-mm-yy).\n\n");
+            dateInput = Console.ReadLine();
+        }
+
+        return dateInput;
+    }
+
 }
