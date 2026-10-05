@@ -13,6 +13,7 @@ class Program
             Console.WriteLine("\nChoose a opetion:");
             Console.WriteLine("\nType 0 to close Application");
             Console.WriteLine("Type 1 to Create a Habit");
+            Console.WriteLine("Type 2 to View All Habits");
             Console.Write("Option: ");
             string? command = Console.ReadLine();
 
@@ -24,8 +25,12 @@ class Program
                 case "1":
                     string habit = AuxiliaryMethods.GetInputStr("\nWrite your habit: ");
                     string unit = AuxiliaryMethods.GetInputStr("\nWrite the unit of measure");
-                    Querys.CreateHabits(habit,unit);
+                    HabitRepository.CreateHabits(habit,unit);
                     break;
+                case "2":
+                    HabitRepository.GetAllHabits();
+                    break;
+
                 default:
                     Console.WriteLine("This is not an acceptable option; please try again.");
                     break;
