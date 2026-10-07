@@ -1,9 +1,8 @@
-using System;
 using System.Globalization;
 
-namespace Habit_Logger_Me;
+namespace Habit_Logger_Me.UI;
 
-public static class AuxiliaryMethods
+public static class ConsoleInput
 {
     public static string GetInputStr(string text)
     {
@@ -23,9 +22,7 @@ public static class AuxiliaryMethods
             numberInput = Console.ReadLine();
         }
 
-        int finalInput = Convert.ToInt32(numberInput);
-
-        return finalInput;
+        return int.Parse(numberInput);
     }
 
     public static string GetDateInput()
@@ -41,5 +38,4 @@ public static class AuxiliaryMethods
 
         return dateInput;
     }
-
 }

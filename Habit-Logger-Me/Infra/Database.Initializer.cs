@@ -1,26 +1,10 @@
-using System;
-using Microsoft.Data.Sqlite;
+namespace Habit_Logger_Me.Infra;
 
-namespace Habit_Logger_Me;
-
-public static class DatabaseConnection
+public static class DatabaseInitializer
 {
-    private const string ConnectionString = @"Data source=habit.db";
-    public static SqliteConnection Open()
-    {
-        var connection = new SqliteConnection(ConnectionString);
-        connection.Open();
-
-        using var pragma = connection.CreateCommand();
-        pragma.CommandText = "PRAGMA foreign_keys = ON;";
-        pragma.ExecuteNonQuery();
-
-        return connection;
-    }
-
     public static void Initialize()
     {
-        using var connection = Open();
+        using var connection = DatabaseConnection.Open();
         using var command = connection.CreateCommand();
         command.CommandText = @"
             CREATE TABLE IF NOT EXISTS Habits (
