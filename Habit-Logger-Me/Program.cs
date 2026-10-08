@@ -1,43 +1,47 @@
-﻿namespace Habit_Logger_Me;
+﻿using Habit_Logger_Me.Infra;
+using Habit_Logger_Me.UI;
+
+namespace Habit_Logger_Me;
 
 class Program
 {
     public static void Main()
     {
-        DatabaseConnection.Initialize();
+        DatabaseInitializer.Initialize();
 
-        bool closeApp = false;
-        while (closeApp == false)
+        bool AppClose = false;
+
+        while (!AppClose)
         {
-            Console.WriteLine("\n\nWelcome to Register your habits !!");
-            Console.WriteLine("\nChoose a opetion:");
-            Console.WriteLine("\nType 0 to close Application");
-            Console.WriteLine("Type 1 to Create a Habit");
-            Console.WriteLine("Type 2 to View All Habits");
-            Console.WriteLine("Type 3 to Update a Habit");
-            Console.WriteLine("Type 4 to Delete a Habit");
-            Console.Write("Option: ");
-            string? command = Console.ReadLine();
+            var option = Menu.GetInputUser();
 
-            switch (command)
+            switch (option)
             {
                 case "0":
                     Environment.Exit(0);
                     break;
                 case "1":
-                    HabitRepository.CreateHabits();
+                    ConsoleHabit.CreateHabit();
                     break;
                 case "2":
-                    HabitRepository.GetAllHabits();
+                    ConsoleHabit.AllHabits();
                     break;
                 case "3":
-                    HabitRepository.UpdateHabit();
+                    ConsoleHabit.UpdateHabit();
                     break;
                 case "4":
-                    HabitRepository.DeleteHabit();
+                    ConsoleHabit.DeleteHabit();
                     break;
-                default:
-                    Console.WriteLine("This is not an acceptable option; please try again.");
+                case "5":
+                    break;
+                case "6":
+                    break;
+                case "7":
+                    break;
+                case "8":
+                    break;
+                case null:
+                    Console.WriteLine("This is not a option");
                     break;
             }
         }

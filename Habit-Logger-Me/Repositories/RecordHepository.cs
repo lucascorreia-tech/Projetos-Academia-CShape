@@ -7,7 +7,7 @@ namespace Habit_Logger_Me.Repositories;
 
 public class RecordHepository : IRecordHepository
 {
-    public void CreateRecord(Record record)
+    public void InsertRecord(Record record)
     {
         using var connection = DatabaseConnection.Open();
         using var command = connection.CreateCommand();

@@ -6,7 +6,7 @@ namespace Habit_Logger_Me.Repositories;
 public interface IHabitRepository
 {
     bool ExistsId(int id);
-    void CreateHabits(Habit habit);
+    void InsertHabits(Habit habit);
     List<Habit> GetAllHabits();
     void UpdateHabit(Habit habit);
     void DeleteHabit(int id);

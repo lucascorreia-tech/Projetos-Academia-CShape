@@ -14,7 +14,7 @@ public class HabitRepository : IHabitRepository
         command.Parameters.AddWithValue("$Id_Habit",id);
         return command.ExecuteScalar() is not null;
     }
-    public void CreateHabits(Habit habit)
+    public void InsertHabits(Habit habit)
     {
         using var command = DatabaseConnection.Open().CreateCommand();
         command.Parameters.AddWithValue("$nameHabit", habit.NameHabit);
@@ -22,7 +22,7 @@ public class HabitRepository : IHabitRepository
         command.CommandText = @"INSERT INTO Habits (Habit, Unit) VALUES ($namehabit, $unit);";
         command.ExecuteNonQuery();
     }
-    List<Habit> IHabitRepository.GetAllHabits()
+    public List<Habit> GetAllHabits()
     {
         List<Habit> HabitList = new List<Habit>();
 

@@ -4,16 +4,14 @@ namespace Habit_Logger_Me.UI;
 
 public static class ConsoleInput
 {
-    public static string GetInputStr(string text)
+    public static string GetInputStr()
     {
-        Console.WriteLine(text);
         string? inputStr = Console.ReadLine();
         return inputStr!;
     }
 
-    public static int GetNumberInput(string text)
+    public static int GetNumberInput()
     {
-        Console.WriteLine(text);
         string? numberInput = Console.ReadLine();
 
         while (!Int32.TryParse(numberInput, out _) || Convert.ToInt32(numberInput) < 0)
