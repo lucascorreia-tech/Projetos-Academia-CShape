@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="HabitLogger.Application/HabitLogger.Application.csproj" />
+  <Project Path="HabitLogger.ConsoleUI/HabitLogger.ConsoleUI.csproj" />
+  <Project Path="HabitLogger.Domain/HabitLogger.Domain.csproj" />
+  <Project Path="HabitLogger.Infrastructure/HabitLogger.Infrastructure.csproj" />
+  <Project Path="HabitLogger.Tests/HabitLogger.Tests.csproj" />
+</Solution>

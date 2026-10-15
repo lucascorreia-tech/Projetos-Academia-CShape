@@ -1,3 +1,5 @@
+using Microsoft.Data.Sqlite;
+
 namespace Habit_Logger_Me.Infra;
 
 public static class DatabaseInitializer
@@ -21,5 +23,30 @@ public static class DatabaseInitializer
                 FOREIGN KEY (Id_Habit) REFERENCES Habits(Id_Habit)
             );";
             command.ExecuteNonQuery();
+    }
+
+    private static void Seed()
+    {
+        using var connection = DatabaseConnection.Open();
+        
+        using (var check = connection.CreateCommand())
+        {
+            check.CommandText = "SELECT COUNT(*) FROM Habitos";
+            if ((long)check.ExecuteScalar()! > 0) return;
+        }
+
+        using var transaction = connection.BeginTransaction();
+
+        try
+        {
+            var random = new Random();
+            List<string> habtis = ["Dietas", "Beber água", "Estudar"];
+
+        }
+        catch (SqliteException ex)
+        {
+            transaction.Rollback();
+            Console.WriteLine("Error:" + ex.Message);
+        }
     }
 }
