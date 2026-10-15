@@ -6,9 +6,9 @@ namespace HabitLogger.Application.Interface;
 
 public interface IHabitRepository
 {
-    public Result Insert(Habit habit);
-    public Result<List<Habit>> GetAll();
-    public Result<Habit> GetById(long id);
-    public Result Update(Habit habit);
-    public Result Delete(long id);
+    void Insert(Habit habit);
+    List<Habit> GetAll();
+    Habit? GetById(long id);
+    bool Update(Habit habit);
+    bool Delete(long id);
 }
