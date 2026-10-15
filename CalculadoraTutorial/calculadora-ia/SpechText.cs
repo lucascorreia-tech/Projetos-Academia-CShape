@@ -6,8 +6,10 @@ using Microsoft.CognitiveServices.Speech.Audio;
 
 public class Spechtext
 {
-    readonly static string _speechKey = "";
-    readonly static string _endpoint = "";
+    // Speech service API key
+    readonly static string _speechKey = "YOUR-KEY";
+    // Resource region (e.g. brazilsouth)    
+    readonly static string _endpoint = "YOUR-REGION";
 
     public async static Task<SpeechRecognitionResult> OutputSpeech()
     {
